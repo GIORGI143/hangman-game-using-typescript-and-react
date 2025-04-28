@@ -20,3 +20,26 @@ body {
   align-items: center;
   flex-direction: column;
 }
+
+.try-agein-button {
+  color: white;
+  background-color: black;
+  padding: 10px 20px;
+  cursor: grab;
+  border-radius: 10px;
+  outline: none;
+  border: none;
+  margin-top: 2rem;
+  transition: all 0.3s ease;
+}
+.try-agein-button:focus {
+  outline: none;
+  border: none;
+}
+
+.try-agein-button:active {
+  cursor: grabbing;
+  outline: none;
+  border: none;
+  transform: translateX(-2px) translateY(2px);
+}

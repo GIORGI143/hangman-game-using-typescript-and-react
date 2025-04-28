@@ -2,6 +2,7 @@ import Henger from "./components/Henger";
 import Word from "./components/Word";
 import Letters from "./components/Letters";
 import GuessTheWordProvider from "./context/GuessTheWordProvider";
+import LoseScreen from "./components/LoseScreen";
 function App() {
   return (
     <div
@@ -14,6 +15,7 @@ function App() {
       }}
     >
       <GuessTheWordProvider>
+        <LoseScreen />
         <Henger />
         <Word />
         <Letters />

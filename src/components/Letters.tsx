@@ -1,5 +1,7 @@
+import { useContext } from "react";
+import { GuessTheWordContext } from "../context/GuessTheWordProvider";
 const Letters = () => {
-  const letters: string[] = [
+  const lettersForKeyboard: string[] = [
     "a",
     "b",
     "c",
@@ -27,7 +29,32 @@ const Letters = () => {
     "y",
     "z",
   ];
-  const handleLetterClick = (letter: string): void => {};
+
+  const {
+    guessedLetters,
+    letters,
+    setLetters,
+    setNumberOfMistakes,
+    setGuessedLetters,
+  } = useContext(GuessTheWordContext);
+
+  const handleLetterClick = (pressedLetter: string): void => {
+    if (guessedLetters && guessedLetters.includes(pressedLetter)) {
+      return;
+    } else if (guessedLetters) {
+      let letterIsGuessed = false;
+      guessedLetters.push(pressedLetter);
+      setGuessedLetters && setGuessedLetters([...guessedLetters]);
+      letters?.forEach((element) => {
+        if (element.letter === pressedLetter) {
+          letterIsGuessed = true;
+          element.isGuessed = true;
+        }
+      });
+      !letterIsGuessed && setNumberOfMistakes((prev: number) => prev + 1);
+      letters && setLetters([...letters]);
+    }
+  };
   return (
     <div
       style={{
@@ -39,26 +66,32 @@ const Letters = () => {
         gap: "10px",
       }}
     >
-      {letters.map((letter, index) => (
-        <div
+      {lettersForKeyboard.map((letter, index) => (
+        <button
+          className="letter-button"
           key={index}
           style={{
-            color: "black",
+            color: guessedLetters?.includes(letter) ? "#656262" : "black",
             fontWeight: "bold",
             width: "50px",
             height: "50px",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: "white",
+            backgroundColor: guessedLetters?.includes(letter)
+              ? "#b3abab"
+              : "white",
             borderRadius: "5px",
+            cursor: guessedLetters?.includes(letter) ? "default" : "grab",
+            outline: " none",
+            border: "none",
           }}
           onClick={() => {
             handleLetterClick(letter);
           }}
         >
           {letter.toUpperCase()}
-        </div>
+        </button>
       ))}
     </div>
   );

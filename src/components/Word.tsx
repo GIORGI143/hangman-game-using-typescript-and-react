@@ -1,23 +1,8 @@
-import { useState, useContext, useEffect } from "react";
+import { useContext } from "react";
 import { GuessTheWordContext } from "../context/GuessTheWordProvider";
-interface lettersArrayElementType {
-  letter: string;
-  isGuessed: boolean;
-}
-const Word = () => {
-  const { randomWord } = useContext(GuessTheWordContext);
-  const [letters, setLetters] = useState<lettersArrayElementType[] | undefined>(
-    undefined
-  );
 
-  useEffect(() => {
-    if (randomWord) {
-      const lettersArray: lettersArrayElementType[] = randomWord
-        .split("")
-        .map((letter) => ({ letter, isGuessed: false }));
-      setLetters(lettersArray);
-    }
-  }, [randomWord]);
+const Word = () => {
+  const { letters } = useContext(GuessTheWordContext);
 
   return (
     <div style={{ display: "flex", gap: "20px" }}>

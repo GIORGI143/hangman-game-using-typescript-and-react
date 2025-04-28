@@ -1,4 +1,9 @@
+import { useContext } from "react";
+import { GuessTheWordContext } from "../context/GuessTheWordProvider";
+
 const Henger = () => {
+  const { numberOfMistakes } = useContext(GuessTheWordContext);
+
   const hengerWoodStyle = {
     backgroundColor: "#9c410c",
     border: "2px solid black",
@@ -41,7 +46,6 @@ const Henger = () => {
           top: "-10px",
         }}
       />
-      {/* stickman */}
       <div
         style={{
           width: "100px",
@@ -59,78 +63,94 @@ const Henger = () => {
             backgroundColor: "#8E4D1E",
           }}
         />
-        <div
-          style={{
-            width: "60px",
-            height: "60px",
-            backgroundColor: "black",
-            borderRadius: "50%",
-          }}
-        />
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            width: "20px",
-            height: "120px",
-            borderRadius: "4px  ",
-            backgroundColor: "black",
-          }}
-        >
+        {/* stickman */}
+
+        {numberOfMistakes >= 1 && (
           <div
             style={{
-              position: "relative",
+              width: "60px",
+              height: "60px",
+              backgroundColor: "black",
+              borderRadius: "50%",
+            }}
+          />
+        )}
+
+        {numberOfMistakes >= 2 && (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
               width: "20px",
-              height: "20px",
+              height: "120px",
+              borderRadius: "4px  ",
+              backgroundColor: "black",
             }}
           >
             <div
               style={{
-                ...armsAndLegsStyle,
-                position: "absolute",
-                top: " 0",
-                left: "-19px",
-                transform: "rotate(45deg)",
+                position: "relative",
+                width: "20px",
+                height: "20px",
               }}
-            />
+            >
+              {numberOfMistakes >= 3 && (
+                <div
+                  style={{
+                    ...armsAndLegsStyle,
+                    position: "absolute",
+                    top: " 0",
+                    left: "-19px",
+                    transform: "rotate(45deg)",
+                  }}
+                />
+              )}
+              {numberOfMistakes >= 4 && (
+                <div
+                  style={{
+                    ...armsAndLegsStyle,
+                    position: "absolute",
+                    top: " 0",
+                    right: "-19px",
+                    transform: "rotate(-45deg)",
+                  }}
+                />
+              )}
+            </div>
             <div
               style={{
-                ...armsAndLegsStyle,
-                position: "absolute",
-                top: " 0",
-                right: "-19px",
-                transform: "rotate(-45deg)",
+                position: "relative",
+                width: "20px",
+                height: "20px",
               }}
-            />
+            >
+              {numberOfMistakes >= 5 && (
+                <div
+                  style={{
+                    ...armsAndLegsStyle,
+                    position: "absolute",
+                    top: " 0",
+                    left: "-19px",
+                    transform: "rotate(45deg)",
+                  }}
+                />
+              )}
+
+              {numberOfMistakes >= 6 && (
+                <div
+                  style={{
+                    ...armsAndLegsStyle,
+                    position: "absolute",
+                    top: " 0",
+                    right: "-19px",
+                    transform: "rotate(-45deg)",
+                  }}
+                />
+              )}
+            </div>
           </div>
-          <div
-            style={{
-              position: "relative",
-              width: "20px",
-              height: "20px",
-            }}
-          >
-            <div
-              style={{
-                ...armsAndLegsStyle,
-                position: "absolute",
-                top: " 0",
-                left: "-19px",
-                transform: "rotate(45deg)",
-              }}
-            />
-            <div
-              style={{
-                ...armsAndLegsStyle,
-                position: "absolute",
-                top: " 0",
-                right: "-19px",
-                transform: "rotate(-45deg)",
-              }}
-            />
-          </div>
-        </div>
+        )}
       </div>
       <div
         style={{
