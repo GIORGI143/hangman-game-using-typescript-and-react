@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { GuessTheWordContext } from "../context/GuessTheWordProvider";
 
 const Henger = () => {
-  const { numberOfMistakes } = useContext(GuessTheWordContext);
+  const { numberOfMistakes, winStrike } = useContext(GuessTheWordContext);
 
   const hengerWoodStyle = {
     backgroundColor: "#9c410c",
@@ -25,10 +25,20 @@ const Henger = () => {
         borderRadius: "5px ",
         display: "flex",
         flexDirection: "column",
-        height: "400px",
+        height: "300px",
         alignItems: "flex-end ",
       }}
     >
+      <span
+        style={{
+          position: "fixed",
+          top: "10px",
+          left: "20px",
+        }}
+      >
+        Win Strike: {winStrike}
+      </span>
+
       <div
         style={{
           ...hengerWoodStyle,
@@ -40,7 +50,7 @@ const Henger = () => {
         style={{
           ...hengerWoodStyle,
           width: "25px",
-          height: "400px",
+          height: "300px",
           position: "absolute",
           left: "10px",
           top: "-10px",

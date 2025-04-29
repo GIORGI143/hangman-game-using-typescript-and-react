@@ -15,6 +15,10 @@ interface GuessTheWordContextType {
   setLetters: (letters: lettersArrayElementType[] | undefined) => void;
   setGuessedLetters?: React.Dispatch<React.SetStateAction<string[]>>;
   resetGame: () => void;
+  winStrike: number;
+  setWinStrike: React.Dispatch<React.SetStateAction<number>>;
+  playerWon: boolean;
+  setPlayerWon: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface GuessTheWordProviderProps {
@@ -38,9 +42,13 @@ const GuessTheWordProvider: React.FC<GuessTheWordProviderProps> = ({
     undefined
   );
 
+  const [winStrike, setWinStrike] = useState<number>(0);
+  const [playerWon, setPlayerWon] = useState<boolean>(false);
+
   // Generate a random word from the word list
   const generateRandomWord = (): void => {
     let word = WordList[Math.floor(Math.random() * WordList.length)];
+    console.log("word", word);
     setRandomWord(word);
   };
 
@@ -60,6 +68,7 @@ const GuessTheWordProvider: React.FC<GuessTheWordProviderProps> = ({
 
   //reset game function
   const resetGame = (): void => {
+    playerWon && setPlayerWon(false);
     setGuessedLetters([]);
     setNumberOfMistakes(0);
     generateRandomWord();
@@ -75,6 +84,10 @@ const GuessTheWordProvider: React.FC<GuessTheWordProviderProps> = ({
     guessedLetters,
     setGuessedLetters,
     resetGame,
+    playerWon,
+    setPlayerWon,
+    winStrike,
+    setWinStrike,
   };
 
   return (

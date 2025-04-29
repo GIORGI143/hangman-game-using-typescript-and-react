@@ -1,9 +1,13 @@
 import { useContext } from "react";
 import { GuessTheWordContext } from "../context/GuessTheWordProvider";
+import PlayAgeinButton from "./PlayAgeinButton";
 const LoseScreen = () => {
-  const { numberOfMistakes, randomWord, resetGame } =
+  const { numberOfMistakes, randomWord, setWinStrike } =
     useContext(GuessTheWordContext);
 
+  if (numberOfMistakes >= 6) {
+    setWinStrike && setWinStrike(0);
+  }
   return (
     <>
       {numberOfMistakes >= 6 && (
@@ -52,9 +56,7 @@ const LoseScreen = () => {
             >
               Correct Word Was: {randomWord}
             </span>
-            <button className="try-agein-button" onClick={() => resetGame()}>
-              Try Agein
-            </button>
+            <PlayAgeinButton />
           </div>
         </div>
       )}

@@ -1,5 +1,6 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { GuessTheWordContext } from "../context/GuessTheWordProvider";
+import WordCorrectlyGuessed from "./WordCorrectlyGuessed";
 const Letters = () => {
   const lettersForKeyboard: string[] = [
     "a",
@@ -36,6 +37,9 @@ const Letters = () => {
     setLetters,
     setNumberOfMistakes,
     setGuessedLetters,
+    setPlayerWon,
+    setWinStrike,
+    playerWon,
   } = useContext(GuessTheWordContext);
 
   const handleLetterClick = (pressedLetter: string): void => {
@@ -43,6 +47,7 @@ const Letters = () => {
       return;
     } else if (guessedLetters) {
       let letterIsGuessed = false;
+      let everyLetterIsGuessed = true;
       guessedLetters.push(pressedLetter);
       setGuessedLetters && setGuessedLetters([...guessedLetters]);
       letters?.forEach((element) => {
@@ -50,11 +55,39 @@ const Letters = () => {
           letterIsGuessed = true;
           element.isGuessed = true;
         }
+        if (!element.isGuessed) {
+          everyLetterIsGuessed = false;
+        }
       });
+
+      if (everyLetterIsGuessed) {
+        setPlayerWon(true);
+        setWinStrike((prev: number) => prev + 1);
+      }
+      // if letter is not guessed, increase the number of mistakes
       !letterIsGuessed && setNumberOfMistakes((prev: number) => prev + 1);
+
       letters && setLetters([...letters]);
     }
   };
+
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      const pressedKey = event.key.toLowerCase();
+      if (lettersForKeyboard.includes(pressedKey)) {
+        handleLetterClick(pressedKey);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyPress);
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [guessedLetters, letters]);
+
+  if (playerWon) {
+    return <WordCorrectlyGuessed />;
+  }
   return (
     <div
       style={{
